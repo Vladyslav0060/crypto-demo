@@ -1,25 +1,31 @@
-import { Container } from "@mui/system";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CardItem from "./components/Card";
-import { Card, Grid } from "@mui/material";
+import Home from "./components/Home";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import AppBar from "./components/AppBar";
+import Tour from "./components/Tour";
+import BreadcrumbsItem from "./components/BreadCrumpbsItem";
+import { Container } from "@mui/system";
 function App() {
   return (
     <div className="App">
-      <AppBar />
-      <Container sx={{ marginY: 5 }}>
-        <Grid container spacing={5}>
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
-        </Grid>
-      </Container>
-      {/* <BrowserRouter>
+      <BrowserRouter>
+        <AppBar />
+        <Container sx={{ width: "900px" }}>
+          <BreadcrumbsItem />
+        </Container>
+
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Link to="/items">Click to move on</Link>
+              </>
+            }
+          />
+          <Route path="/items" element={<Home />} />
+          <Route path="items/:id" element={<Tour />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </div>
   );
 }
