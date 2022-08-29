@@ -1,6 +1,7 @@
 import { MantineProvider, ColorSchemeProvider, ColorScheme, Text } from "@mantine/core";
 import { useHotkeys } from '@mantine/hooks';
 import { useState } from "react";
+import FooterComponent from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <div className="wrapper">
             <div style={{ display: 'flex', width: '100%', flexDirection: "column", maxWidth: '1400px', paddingTop: '2.5vh' }}>
               <Text size="xl" >gasgas</Text>
+              <FooterComponent />
             </div>
           </div>
         </MantineProvider>
