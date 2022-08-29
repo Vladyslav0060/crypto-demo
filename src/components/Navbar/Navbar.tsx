@@ -92,15 +92,12 @@ export function NavbarMinimalColored() {
             width={{ base: 80 }}
             p="md"
             sx={(theme) => ({
-                marginLeft: 5,
                 borderRight: 'none',
                 alignSelf: 'center',
-                height: '95vh',
-                borderRadius: theme.radius.md,
+                height: '100vh',
                 backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
                     .background,
                 position: 'fixed',
-                top: '2.5vh'
             })}
         >
             <Center>
