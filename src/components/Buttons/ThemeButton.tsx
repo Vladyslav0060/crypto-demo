@@ -8,10 +8,9 @@ const ThemeButton = () => {
         ActionIcon: {
             borderRadius: 8,
             '&:hover': {
-                backgroundColor: '#4bba5f',
+                backgroundColor: theme.colors.blue[6],
                 opacity: 1
             },
-            animation: 'none'
         },
     }));
     const { classes, cx } = useStyles();
