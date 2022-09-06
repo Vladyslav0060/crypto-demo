@@ -87,36 +87,38 @@ export function NavbarMinimalColored() {
     ));
 
     return (
-        <Navbar
-            height={750}
-            width={{ base: 80 }}
-            p="md"
-            sx={(theme) => ({
-                borderRight: 'none',
-                alignSelf: 'center',
-                height: '100vh',
-                backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-                    .background,
-                position: 'fixed',
-            })}
-        >
-            <Center>
-                <MantineLogo type="mark" inverted size={30} />
-            </Center>
-            <Navbar.Section grow mt={50}>
-                <Stack justify="center" spacing={0}>
-                    {links}
-                </Stack>
-            </Navbar.Section>
-            <Navbar.Section>
-                <Stack justify="center" spacing={0}>
-                    <Center><ThemeButton /></Center>
-                    <Divider />
-                    <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
-                    <NavbarLink icon={IconLogout} label="Logout" />
-                </Stack>
-            </Navbar.Section>
-        </Navbar>
+        <div className="navbar-wrapper">
+            <Navbar
+                height={750}
+                width={{ base: 80 }}
+                p="md"
+                sx={(theme) => ({
+                    borderRight: 'none',
+                    alignSelf: 'center',
+                    height: '100vh',
+                    backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+                        .background,
+                    position: 'fixed',
+                })}
+            >
+                <Center>
+                    <MantineLogo type="mark" inverted size={30} />
+                </Center>
+                <Navbar.Section grow mt={50}>
+                    <Stack justify="center" spacing={0}>
+                        {links}
+                    </Stack>
+                </Navbar.Section>
+                <Navbar.Section>
+                    <Stack justify="center" spacing={0}>
+                        <Center><ThemeButton /></Center>
+                        <Divider />
+                        <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+                        <NavbarLink icon={IconLogout} label="Logout" />
+                    </Stack>
+                </Navbar.Section>
+            </Navbar>
+        </div>
     );
 }
 
