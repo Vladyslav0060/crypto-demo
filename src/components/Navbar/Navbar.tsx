@@ -1,5 +1,13 @@
-import { useState } from 'react';
-import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, Divider } from '@mantine/core';
+import { useState } from "react";
+import {
+    Navbar,
+    Center,
+    Tooltip,
+    UnstyledButton,
+    createStyles,
+    Stack,
+    Divider,
+} from "@mantine/core";
 import {
     TablerIcon,
     IconHome2,
@@ -11,25 +19,30 @@ import {
     IconSettings,
     IconLogout,
     IconSwitchHorizontal,
-} from '@tabler/icons';
-import { MantineLogo } from '@mantine/ds';
-import ThemeButton from '../Buttons/ThemeButton';
+} from "@tabler/icons";
+import { MantineLogo } from "@mantine/ds";
+import ThemeButton from "../Buttons/ThemeButton";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const useStyles = createStyles((theme) => ({
     link: {
         width: 50,
         height: 50,
         borderRadius: theme.radius.md,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         color: theme.white,
         opacity: 0.85,
 
-        '&:hover': {
+        "&:hover": {
             opacity: 1,
             backgroundColor: theme.fn.lighten(
-                theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+                theme.fn.variant({
+                    variant: "filled",
+                    color: theme.primaryColor,
+                }).background,
                 0.1
             ),
         },
@@ -37,9 +50,12 @@ const useStyles = createStyles((theme) => ({
 
     active: {
         opacity: 1,
-        '&, &:hover': {
+        "&, &:hover": {
             backgroundColor: theme.fn.lighten(
-                theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+                theme.fn.variant({
+                    variant: "filled",
+                    color: theme.primaryColor,
+                }).background,
                 0.15
             ),
         },
@@ -51,31 +67,60 @@ interface NavbarLinkProps {
     label: string;
     active?: boolean;
     onClick?(): void;
+    link?: string;
 }
 
-function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
+function NavbarLink({
+    icon: Icon,
+    label,
+    active,
+    onClick,
+    link,
+}: NavbarLinkProps) {
     const { classes, cx } = useStyles();
+
     return (
         <Tooltip label={label} position="right" transitionDuration={0}>
-            <UnstyledButton onClick={onClick} className={cx(classes.link, { [classes.active]: active })}>
-                <Icon stroke={1.5} />
-            </UnstyledButton>
+            {link ? (
+                <UnstyledButton
+                    component={Link}
+                    to={link ? link : ""}
+                    onClick={onClick}
+                    className={cx(classes.link, { [classes.active]: active })}
+                >
+                    <Icon stroke={1.5} />
+                </UnstyledButton>
+            ) : (
+                <UnstyledButton
+                    onClick={onClick}
+                    className={cx(classes.link, { [classes.active]: active })}
+                >
+                    <Icon stroke={1.5} />
+                </UnstyledButton>
+            )}
         </Tooltip>
     );
 }
 
 const mockdata = [
-    { icon: IconHome2, label: 'Home' },
-    { icon: IconGauge, label: 'Dashboard' },
-    { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-    { icon: IconCalendarStats, label: 'Releases' },
-    { icon: IconUser, label: 'Account' },
-    { icon: IconFingerprint, label: 'Security' },
-    { icon: IconSettings, label: 'Settings' },
+    { icon: IconHome2, label: "Home", link: "/" },
+    { icon: IconGauge, label: "Dashboard", link: "/page2" },
+    { icon: IconDeviceDesktopAnalytics, label: "Analytics", link: "/page3" },
+    { icon: IconCalendarStats, label: "Releases", link: "/page4" },
+    { icon: IconUser, label: "Account", link: "/page5" },
+    { icon: IconFingerprint, label: "Security", link: "/page6" },
+    { icon: IconSettings, label: "Settings", link: "/page7" },
 ];
 
 export function NavbarMinimalColored() {
-    const [active, setActive] = useState(2);
+    const [active, setActive] = useState(0);
+    const location = useLocation();
+    useEffect(() => {
+        const index = mockdata.findIndex(
+            (item) => item.link === location.pathname
+        );
+        setActive(index);
+    }, [location.pathname]);
 
     const links = mockdata.map((link, index) => (
         <NavbarLink
@@ -93,12 +138,14 @@ export function NavbarMinimalColored() {
                 width={{ base: 80 }}
                 p="md"
                 sx={(theme) => ({
-                    borderRight: 'none',
-                    alignSelf: 'center',
-                    height: '100vh',
-                    backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-                        .background,
-                    position: 'fixed',
+                    borderRight: "none",
+                    alignSelf: "center",
+                    height: "100vh",
+                    backgroundColor: theme.fn.variant({
+                        variant: "filled",
+                        color: theme.primaryColor,
+                    }).background,
+                    position: "fixed",
                 })}
             >
                 <Center>
@@ -111,9 +158,14 @@ export function NavbarMinimalColored() {
                 </Navbar.Section>
                 <Navbar.Section>
                     <Stack justify="center" spacing={0}>
-                        <Center><ThemeButton /></Center>
+                        <Center>
+                            <ThemeButton />
+                        </Center>
                         <Divider />
-                        <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+                        <NavbarLink
+                            icon={IconSwitchHorizontal}
+                            label="Change account"
+                        />
                         <NavbarLink icon={IconLogout} label="Logout" />
                     </Stack>
                 </Navbar.Section>
@@ -122,4 +174,4 @@ export function NavbarMinimalColored() {
     );
 }
 
-export default NavbarMinimalColored
+export default NavbarMinimalColored;
