@@ -1,4 +1,4 @@
-import { ActionIcon, createStyles, useMantineColorScheme } from '@mantine/core';
+import { ActionIcon, createStyles, Tooltip, useMantineColorScheme } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 
 const ThemeButton = () => {
@@ -8,22 +8,28 @@ const ThemeButton = () => {
         ActionIcon: {
             borderRadius: 8,
             '&:hover': {
-                backgroundColor: theme.colors.blue[6],
+                backgroundColor: '#338bda',
                 opacity: 1
             },
+            '&:active': {
+                transform: 'scale(0.9)',
+                backgroundColor: 'darken($button-bg, 5%)',
+                boxShadow: '0 2px 25px rgba(255, 0, 130, 0.2)',
+            }
         },
     }));
     const { classes, cx } = useStyles();
     return (
-        <ActionIcon
-            variant="subtle"
-            onClick={() => toggleColorScheme()}
-            title="Toggle color scheme"
-            size={50}
-            className={cx(classes.ActionIcon)}
-        >
-            {dark ? <IconSun size={24} /> : <IconMoonStars color='#e8e8e8' size={24} />}
-        </ActionIcon>
+        <Tooltip label={`Toggle color scheme`} position="right" transitionDuration={0}>
+            <ActionIcon
+                variant="subtle"
+                onClick={() => toggleColorScheme()}
+                size={50}
+                className={cx(classes.ActionIcon)}
+            >
+                {dark ? <IconSun size={24} /> : <IconMoonStars color='#e8e8e8' size={24} />}
+            </ActionIcon>
+        </Tooltip>
     );
 };
 

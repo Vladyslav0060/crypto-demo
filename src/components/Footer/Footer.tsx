@@ -1,5 +1,5 @@
 import { createStyles, Container, Group, ActionIcon, Text, Avatar } from '@mantine/core';
-import { IconBrandTelegram, IconBrandYoutube, IconBrandInstagram, IconBrandGithub } from '@tabler/icons';
+import { IconBrandTelegram, IconBrandInstagram, IconBrandGithub } from '@tabler/icons';
 import image from '../../assets/Vladyslav0060.jpeg'
 
 const useStyles = createStyles((theme) => ({
