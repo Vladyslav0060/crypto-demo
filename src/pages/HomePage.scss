@@ -1,0 +1,121 @@
+.button {
+    padding: 10px;
+    transition: transform 0.03s ease-out;
+    background-color: #58cc02;
+    border: 1px solid #3aad00;
+    box-shadow: 0 5px 0 #58a700;
+    border-radius: 5px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    color: white;
+    &:active {
+        box-shadow: none;
+        transform: translateY(5px);
+    }
+}
+
+.homepage-block {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    flex: 1 1 0%;
+    padding: 0px;
+    &__content {
+        width: calc(60% - 40px);
+        h2 {
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            font-size: 2.5rem;
+            line-height: 3rem;
+        }
+        span {
+            // color: rgba(0, 20, 42, 0.6);
+            font-size: 1.125rem;
+            line-height: 1.875rem;
+        }
+        .subtitle {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 2rem;
+            .col {
+                display: flex;
+                flex: 1 1 0%;
+                flex-direction: column;
+                &:last-child {
+                    flex: 1 1 0%;
+                }
+                img {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                    margin: 0px;
+                }
+                span.value {
+                    font-size: 1.5rem;
+                    line-height: 1.625rem;
+                    margin: 0.625rem 0px 0.5rem;
+                }
+                span.title {
+                    color: rgba(0, 20, 42, 0.6);
+                    font-size: 1.125rem;
+                    line-height: 1.875rem;
+                }
+            }
+        }
+    }
+    img {
+        width: calc(40% - 40px);
+        margin: 3.75rem 0px;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            scale: 1.1;
+        }
+    }
+    &:nth-of-type(2) {
+        img {
+            order: -1;
+        }
+    }
+}
+
+@media (max-width: 870px) {
+    .homepage-block {
+        display: flex;
+        margin-bottom: 3.75rem;
+        flex-direction: column;
+        img {
+            width: 100%;
+            margin: 1.25rem 0px;
+            order: -1;
+        }
+        &__content {
+            width: 100%;
+            h2 {
+                margin-bottom: 0.75rem;
+                font-size: 1.5rem;
+                line-height: 2.375rem;
+            }
+            span {
+                font-size: 0.875rem;
+                line-height: 1.375rem;
+            }
+            .subtitle {
+                width: 100%;
+                .col {
+                    span {
+                        &.value {
+                            font-size: 1.125rem;
+                            line-height: 1.875rem;
+                        }
+                        &.title {
+                            font-size: 0.875rem;
+                            line-height: 1.375rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
