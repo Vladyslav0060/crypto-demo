@@ -119,7 +119,6 @@ export function NavbarMinimalColored() {
         const index = mockdata.findIndex(
             (item) => item.link === location.pathname
         );
-        console.log(index, location.pathname);
         setActive(index);
     }, [location.pathname]);
 
