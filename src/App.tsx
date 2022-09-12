@@ -11,6 +11,7 @@ import {
 import HomePage from "./pages/HomePage";
 import { AnimatePresence } from "framer-motion";
 import CoinList from "./pages/CoinList";
+import TableComponent from "./components/Table/Table";
 
 function App() {
     const location = useLocation();
@@ -146,10 +147,7 @@ function App() {
                         <Routes key={location.pathname} location={location}>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/coin" element={<CoinPage />} />
-                            <Route
-                                path="/page3"
-                                element={<CoinList data={data} />}
-                            />
+                            <Route path="/page3" element={<CoinList />} />
                         </Routes>
                     </AnimatePresence>
                     <FooterComponent />

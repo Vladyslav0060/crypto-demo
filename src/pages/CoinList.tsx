@@ -1,254 +1,154 @@
-import { useState } from "react";
-import {
-    createStyles,
-    Table,
-    ScrollArea,
-    UnstyledButton,
-    Group,
-    Text,
-    Center,
-    TextInput,
-} from "@mantine/core";
-import { keys } from "@mantine/utils";
-import {
-    IconSelector,
-    IconChevronDown,
-    IconChevronUp,
-    IconSearch,
-} from "@tabler/icons";
-import "./CoinList.scss";
-import TextComponent from "../components/TextComponent";
-
-const useStyles = createStyles((theme) => ({
-    th: {
-        padding: "0 !important",
-    },
-    header: {
-        backgroundColor: theme.colors.gray[4],
-    },
-
-    control: {
-        width: "100%",
-        padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-        backgroundColor:
-            theme.colorScheme === "dark"
-                ? theme.colors.dark[7]
-                : theme.colors.gray[0],
-        "&:hover": {
-            backgroundColor:
-                theme.colorScheme === "dark"
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-        },
-    },
-
-    icon: {
-        width: 21,
-        height: 21,
-        borderRadius: 21,
-    },
-}));
+import React, { useEffect, useState } from "react";
+import TableComponent from "../components/Table/Table";
+import axios from "axios";
 
 interface RowData {
+    id?: string;
+    symbol?: string;
     name: string;
-    price: number;
+    current_price: number;
     price_change_percentage_24h: number;
     total_volume: number;
     market_cap: number;
 }
 
-interface TableSortProps {
-    data: RowData[];
-}
+// const data: RowData[] = [
+//     {
+//         name: "Athena Weissnat",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12444455,
+//     },
+//     {
+//         name: "Deangelo Runolfsson",
+//         price: 1232,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 15000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Danny Carter",
+//         price: 125,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Trace Tremblay PhD",
+//         price: 133,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Derek Dibbert",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Viola Bernhard",
+//         price: 123,
+//         price_change_percentage_24h: 1.05,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Austin Jacobi",
+//         price: 123,
+//         price_change_percentage_24h: 1.65,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Hershel Mosciski",
+//         price: 123,
+//         price_change_percentage_24h: 1.45,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Mylene Ebert",
+//         price: 123,
+//         price_change_percentage_24h: -1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Lou Trantow",
+//         price: 132,
+//         price_change_percentage_24h: -12.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Dariana Weimann",
+//         price: 123,
+//         price_change_percentage_24h: -17.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Dr. Christy Herman",
+//         price: 1233,
+//         price_change_percentage_24h: -118.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Katelin Schuster",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Melyna Macejkovic",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Pinkie Rice",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+//     {
+//         name: "Brain Kreiger",
+//         price: 123,
+//         price_change_percentage_24h: 1.5,
+//         total_volume: 10000,
+//         market_cap: 12344455,
+//     },
+// ];
 
-interface ThProps {
-    children: React.ReactNode;
-    reversed: boolean;
-    sorted: boolean;
-    onSort(): void;
-}
+const CoinList = () => {
+    const [data, setData] = useState<RowData[]>();
+    useEffect(() => {
+        const getAssets = async () => {
+            const response = await axios.get(process.env.REACT_APP_ASSETS);
+            const result: RowData[] = response.data.map((item: RowData) => {
+                return {
+                    id: item.id,
+                    symbol: item.symbol,
+                    name: item.name,
+                    current_price: item.current_price,
+                    price_change_percentage_24h:
+                        item.price_change_percentage_24h,
+                    total_volume: item.total_volume,
+                    market_cap: item.market_cap,
+                };
+            });
+            setData(result);
+        };
+        getAssets();
+    }, []);
+    return <div>{data ? <TableComponent data={data} /> : <></>}</div>;
+};
 
-function Th({ children, reversed, sorted, onSort }: ThProps) {
-    const { classes } = useStyles();
-    const Icon = sorted
-        ? reversed
-            ? IconChevronUp
-            : IconChevronDown
-        : IconSelector;
-    return (
-        <th className={classes.th}>
-            <UnstyledButton onClick={onSort} className={classes.control}>
-                <Group position="apart">
-                    <Text weight={500} size="sm">
-                        {children}
-                    </Text>
-                    <Center className={classes.icon}>
-                        <Icon size={14} stroke={1.5} />
-                    </Center>
-                </Group>
-            </UnstyledButton>
-        </th>
-    );
-}
-
-function filterData(data: RowData[], search: string) {
-    const query = search.toLowerCase().trim();
-    return data.filter((item) =>
-        keys(data[0]).some((key) =>
-            item[key].toString().toLowerCase().includes(query)
-        )
-    );
-}
-
-function sortData(
-    data: RowData[],
-    payload: { sortBy: keyof RowData | null; reversed: boolean; search: string }
-) {
-    const { sortBy } = payload;
-
-    if (!sortBy) return filterData(data, payload.search);
-
-    if (sortBy === "name") {
-        return filterData(
-            [...data].sort((a, b) => {
-                if (payload.reversed) {
-                    return b[sortBy].localeCompare(a[sortBy]);
-                }
-
-                return a[sortBy].localeCompare(b[sortBy]);
-            }),
-            payload.search
-        );
-    }
-
-    return filterData(
-        [...data].sort(function (a: any, b: any) {
-            if (a[sortBy] === Infinity) return 1;
-            else if (isNaN(a[sortBy])) return -1;
-            else if (!payload.reversed) return a[sortBy] - b[sortBy];
-            else return b[sortBy] - a[sortBy];
-        }),
-        payload.search
-    );
-}
-
-export function TableSort({ data }: TableSortProps) {
-    const [search, setSearch] = useState("");
-    const [sortedData, setSortedData] = useState(data);
-    const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
-    const [reverseSortDirection, setReverseSortDirection] = useState(false);
-
-    const setSorting = (field: keyof RowData) => {
-        const reversed = field === sortBy ? !reverseSortDirection : false;
-        setReverseSortDirection(reversed);
-        setSortBy(field);
-        setSortedData(sortData(data, { sortBy: field, reversed, search }));
-    };
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.currentTarget;
-        setSearch(value);
-        setSortedData(
-            sortData(data, {
-                sortBy,
-                reversed: reverseSortDirection,
-                search: value,
-            })
-        );
-    };
-
-    const rows = sortedData.map((row) => (
-        <tr key={row.name}>
-            <td className="coin-name">
-                <img
-                    className="coin-icon"
-                    alt=""
-                    src="https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
-                />
-                <span className="coin-name__fullname">{row.name}</span>
-                <span className="coin-name__symbol">
-                    <TextComponent>BTC</TextComponent>
-                </span>
-            </td>
-            <td>{row.price}</td>
-            <td>{row.price_change_percentage_24h}</td>
-            <td>{row.total_volume}</td>
-            <td>{row.market_cap}</td>
-        </tr>
-    ));
-
-    return (
-        <ScrollArea>
-            <TextInput
-                placeholder="Search by any field"
-                mb="md"
-                icon={<IconSearch size={14} stroke={1.5} />}
-                value={search}
-                onChange={handleSearchChange}
-            />
-            <Table
-                horizontalSpacing="md"
-                verticalSpacing="xs"
-                sx={{ tableLayout: "fixed", minWidth: 700 }}
-                className="table"
-            >
-                <thead>
-                    <tr>
-                        <Th
-                            sorted={sortBy === "name"}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting("name")}
-                        >
-                            Name
-                        </Th>
-                        <Th
-                            sorted={sortBy === "price"}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting("price")}
-                        >
-                            Price
-                        </Th>
-                        <Th
-                            sorted={sortBy === "price_change_percentage_24h"}
-                            reversed={reverseSortDirection}
-                            onSort={() =>
-                                setSorting("price_change_percentage_24h")
-                            }
-                        >
-                            Change 24h
-                        </Th>
-                        <Th
-                            sorted={sortBy === "total_volume"}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting("total_volume")}
-                        >
-                            Volume 24h
-                        </Th>
-                        <Th
-                            sorted={sortBy === "market_cap"}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting("market_cap")}
-                        >
-                            Market Cap
-                        </Th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows.length > 0 ? (
-                        rows
-                    ) : (
-                        <tr>
-                            <td colSpan={Object.keys(data[0]).length}>
-                                <Text weight={500} align="center">
-                                    Nothing found
-                                </Text>
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </Table>
-        </ScrollArea>
-    );
-}
-
-export default TableSort;
+export default CoinList;
