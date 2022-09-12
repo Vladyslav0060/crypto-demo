@@ -104,7 +104,7 @@ function NavbarLink({
 
 const mockdata = [
     { icon: IconHome2, label: "Home", link: "/" },
-    { icon: IconGauge, label: "Dashboard", link: "/page2" },
+    { icon: IconGauge, label: "Dashboard", link: "/coin" },
     { icon: IconDeviceDesktopAnalytics, label: "Analytics", link: "/page3" },
     { icon: IconCalendarStats, label: "Releases", link: "/page4" },
     { icon: IconUser, label: "Account", link: "/page5" },
