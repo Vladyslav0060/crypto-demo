@@ -38,21 +38,22 @@
             flex-direction: row;
             letter-spacing: 1px;
             color: #1dd15a;
-            h3.up,
-            h3.down {
+            h3 {
                 font-weight: 500;
-            }
-            h3::before {
-                content: "▲";
-                font-size: 20px;
-                padding-right: 2px;
-            }
-            &__down {
-                color: #ef5959;
-                h3::before {
-                    content: "▼";
-                    font-size: 20px;
-                    padding-right: 5px;
+                &.up {
+                    &::before {
+                        content: "▲";
+                        font-size: 20px;
+                        padding-right: 2px;
+                    }
+                }
+                &.down {
+                    color: #ef5959;
+                    &::before {
+                        content: "▼";
+                        font-size: 20px;
+                        padding-right: 5px;
+                    }
                 }
             }
         }
@@ -88,10 +89,6 @@
                 margin-top: 20px;
                 font-weight: 500;
                 width: fit-content;
-                &::before {
-                    content: "$";
-                    padding-right: 10px;
-                }
             }
             .percentage {
                 display: flex;
@@ -108,9 +105,9 @@
                     font-size: 20px;
                     padding-right: 2px;
                 }
-                &__down {
+                span.down {
                     color: #ef5959;
-                    span::before {
+                    &::before {
                         content: "▼";
                         font-size: 20px;
                         padding-right: 5px;
@@ -127,11 +124,8 @@
     height: 100%;
     width: 100%;
     padding-left: 40px;
-    padding-top: 20px;
-    img {
-        width: 45px;
-        height: 45px;
-    }
+    padding-top: 40px;
+    border-radius: 20px;
     &__title {
         width: 100%;
         img {
@@ -140,11 +134,20 @@
         }
         span {
             padding-left: 20%;
+            font-weight: 300;
+            font-size: 20px;
         }
     }
-
+    a {
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+            text-decoration: underline;
+        }
+        cursor: pointer;
+    }
     .coin-info {
-        height: 100%;
+        height: max-content;
         margin-top: 50px;
         h4 {
             font-size: 16px;

@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { ICoinRowData, TableSortProps, ThProps } from "../types/types";
 import {
-    createStyles,
     Table,
     ScrollArea,
     UnstyledButton,
@@ -16,57 +16,11 @@ import {
     IconChevronUp,
     IconSearch,
 } from "@tabler/icons";
-import "../../pages/CoinList.scss";
+import "./Table.scss";
 import TextComponent from "../../components/TextComponent";
-
-const useStyles = createStyles((theme) => ({
-    th: {
-        padding: "0 !important",
-    },
-    header: {
-        backgroundColor: theme.colors.gray[4],
-    },
-
-    control: {
-        width: "100%",
-        padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-        backgroundColor:
-            theme.colorScheme === "dark"
-                ? theme.colors.dark[7]
-                : theme.colors.gray[0],
-        "&:hover": {
-            backgroundColor:
-                theme.colorScheme === "dark"
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-        },
-    },
-
-    icon: {
-        width: 21,
-        height: 21,
-        borderRadius: 21,
-    },
-}));
-
-interface RowData {
-    name: string;
-    current_price: number;
-    price_change_percentage_24h: number;
-    total_volume: number;
-    market_cap: number;
-}
-
-interface TableSortProps {
-    data: RowData[];
-}
-
-interface ThProps {
-    children: React.ReactNode;
-    reversed: boolean;
-    sorted: boolean;
-    onSort(): void;
-}
+import { Link } from "react-router-dom";
+import useStyles from "./styles";
+import utils from "../../utils/utils";
 
 function Th({ children, reversed, sorted, onSort }: ThProps) {
     const { classes } = useStyles();
@@ -91,7 +45,7 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
     );
 }
 
-function filterData(data: RowData[], search: string) {
+function filterData(data: ICoinRowData[], search: string) {
     const query = search.toLowerCase().trim();
     return data.filter((item) =>
         keys(data[0]).some((key) =>
@@ -101,8 +55,12 @@ function filterData(data: RowData[], search: string) {
 }
 
 function sortData(
-    data: RowData[],
-    payload: { sortBy: keyof RowData | null; reversed: boolean; search: string }
+    data: ICoinRowData[],
+    payload: {
+        sortBy: keyof ICoinRowData | null;
+        reversed: boolean;
+        search: string;
+    }
 ) {
     const { sortBy } = payload;
 
@@ -135,10 +93,10 @@ function sortData(
 export function TableComponent({ data }: TableSortProps) {
     const [search, setSearch] = useState("");
     const [sortedData, setSortedData] = useState(data);
-    const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
+    const [sortBy, setSortBy] = useState<keyof ICoinRowData | null>(null);
     const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
-    const setSorting = (field: keyof RowData) => {
+    const setSorting = (field: keyof ICoinRowData) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
@@ -157,23 +115,37 @@ export function TableComponent({ data }: TableSortProps) {
         );
     };
 
-    const rows = sortedData.map((row) => (
+    const rows = sortedData.map((row: ICoinRowData) => (
         <tr key={row.name}>
             <td className="coin-name">
-                <img
-                    className="coin-icon"
-                    alt=""
-                    src="https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
-                />
-                <span className="coin-name__fullname">{row.name}</span>
-                <span className="coin-name__symbol">
-                    <TextComponent>BTC</TextComponent>
-                </span>
+                <Link className="coin-name" to={`/coin/${row.id}`}>
+                    <img className="coin-icon" alt="" src={row.image} />
+                    <span className="coin-name__symbol">
+                        {row.symbol.toUpperCase()}
+                    </span>
+                    <span className="coin-name__fullname">
+                        <TextComponent>{row.name}</TextComponent>
+                    </span>
+                </Link>
             </td>
-            <td>{row.current_price}</td>
-            <td>{row.price_change_percentage_24h}</td>
-            <td>{row.total_volume}</td>
-            <td>{row.market_cap}</td>
+            <td
+                className={
+                    "coin-price-col" +
+                    (row.price_change_percentage_24h >= 0 ? " up" : " down")
+                }
+            >
+                {utils.formatPrice(row.current_price)}
+            </td>
+            <td
+                className={
+                    "coin-percentage-col" +
+                    (row.price_change_percentage_24h >= 0 ? " up" : " down")
+                }
+            >
+                {utils.formatPercentage(row.price_change_percentage_24h)}
+            </td>
+            <td>{utils.formatLargePrice(row.total_volume / 1000)}</td>
+            <td>{utils.formatLargePrice(row.market_cap / 1000)}</td>
         </tr>
     ));
 
@@ -215,14 +187,14 @@ export function TableComponent({ data }: TableSortProps) {
                                 setSorting("price_change_percentage_24h")
                             }
                         >
-                            Change 24h
+                            24h Change
                         </Th>
                         <Th
                             sorted={sortBy === "total_volume"}
                             reversed={reverseSortDirection}
                             onSort={() => setSorting("total_volume")}
                         >
-                            Volume 24h
+                            24h Volume
                         </Th>
                         <Th
                             sorted={sortBy === "market_cap"}
