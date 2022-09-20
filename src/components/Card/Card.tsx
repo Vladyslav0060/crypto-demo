@@ -1,5 +1,4 @@
 import { Popover, Text, Title } from "@mantine/core";
-import { ICard } from "../types/types";
 import { coinCards } from "../../static/CoinCards";
 import "./Card.scss";
 import utils from "../../utils/utils";
@@ -17,7 +16,7 @@ const CardComponent = (data: { props: any; index: number }) => {
                         width={200}
                         position="bottom"
                         withArrow
-                        shadow="md"
+                        shadow="lg"
                     >
                         <Popover.Target>
                             <svg

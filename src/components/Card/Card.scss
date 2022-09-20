@@ -63,20 +63,23 @@
 .coin-price {
     width: 48%;
     height: 100%;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    grid-auto-rows: 70% 30%;
     &__icon {
         width: fit-content;
-        height: 100%;
+        height: 70%;
         padding: 30px;
         min-width: 40px;
         img {
-            width: 40px;
+            width: 60px;
+            border-radius: 9999px;
         }
     }
     &__title {
+        height: 70%;
         width: 100%;
-        padding: 30px 30px 30px 0px;
+        padding: 40px 20px 20px 0px;
         h3 {
             font-size: 25px;
             font-weight: 500;
@@ -116,6 +119,42 @@
             }
         }
     }
+    &__subtitle {
+        font-weight: 500;
+        font-size: 14px;
+        padding-left: 5px;
+    }
+    &__tags {
+        width: 100%;
+        height: 100%;
+        grid-row-start: 2;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        padding: 0 20px 0 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    &__badges {
+        display: flex;
+        height: 75%;
+        align-items: center;
+        width: 100%;
+        overflow-x: scroll;
+        flex-direction: row;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none;
+        &::-webkit-scrollbar {
+            width: 3px;
+            height: 6px;
+            &-thumb {
+                background: gray;
+                border-radius: 20px;
+            }
+        }
+    }
 }
 
 .carousel-card {
@@ -125,7 +164,6 @@
     width: 100%;
     padding-left: 40px;
     padding-top: 40px;
-    border-radius: 20px;
     &__title {
         width: 100%;
         img {

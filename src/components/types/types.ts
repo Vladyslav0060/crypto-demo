@@ -45,10 +45,12 @@ export interface ICoinInfo {
     id: string;
     name: string;
     market_data: MarketData;
+    categories: string[];
     symbol: string;
 }
 
 export type CoinCard = {
     value: MarketData[keyof MarketData] | string;
     percentage?: MarketData[keyof MarketData];
+    currencySymbol?: string;
 };

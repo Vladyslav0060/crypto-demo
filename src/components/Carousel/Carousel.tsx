@@ -45,7 +45,7 @@ const mockData = [
 const CarouselComponent = () => {
     const autoplay = useRef(Autoplay({ delay: 4500 }));
     return (
-        <div style={{ height: "100%" }}>
+        <Paper shadow="sm" style={{ height: "100%" }}>
             <Carousel
                 withIndicators
                 height="100%"
@@ -57,7 +57,7 @@ const CarouselComponent = () => {
                 ]}
                 loop
                 align="start"
-                style={{ height: "100%", borderRadius: 20 }}
+                style={{ height: "100%" }}
                 dragFree
                 initialSlide={0}
                 plugins={[autoplay.current]}
@@ -67,7 +67,7 @@ const CarouselComponent = () => {
             >
                 {mockData.map((item: any) => (
                     <Carousel.Slide key={item.name}>
-                        <Paper shadow="md" className="carousel-card">
+                        <Paper shadow="lg" className="carousel-card">
                             <div className="carousel-card__title">
                                 <img src={item.image} alt="icon" />
                                 <span>{item.rank}</span>
@@ -82,7 +82,7 @@ const CarouselComponent = () => {
                     </Carousel.Slide>
                 ))}
             </Carousel>
-        </div>
+        </Paper>
     );
 };
 
