@@ -24,6 +24,7 @@ import { MantineLogo } from "@mantine/ds";
 import ThemeButton from "../Buttons/ThemeButton";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import React from "react";
 
 const useStyles = createStyles((theme) => ({
     link: {
@@ -104,8 +105,8 @@ function NavbarLink({
 
 const mockdata = [
     { icon: IconHome2, label: "Home", link: "/" },
-    { icon: IconGauge, label: "Dashboard", link: "/coin" },
-    { icon: IconDeviceDesktopAnalytics, label: "Analytics", link: "/page3" },
+    { icon: IconGauge, label: "Dashboard", link: "/coin/:coinId" },
+    { icon: IconDeviceDesktopAnalytics, label: "Analytics", link: "/coin" },
     { icon: IconCalendarStats, label: "Releases", link: "/page4" },
     { icon: IconUser, label: "Account", link: "/page5" },
     { icon: IconFingerprint, label: "Security", link: "/page6" },
@@ -113,7 +114,7 @@ const mockdata = [
 ];
 
 export function NavbarMinimalColored() {
-    const [active, setActive] = useState(0);
+    const [active, setActive] = useState<number>();
     const location = useLocation();
     useEffect(() => {
         const index = mockdata.findIndex(
@@ -174,4 +175,4 @@ export function NavbarMinimalColored() {
     );
 }
 
-export default NavbarMinimalColored;
+export default React.memo(NavbarMinimalColored);
