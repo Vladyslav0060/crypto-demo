@@ -1,5 +1,3 @@
-import { createStyles, Text } from "@mantine/core";
-import React from "react";
 import image1 from "../assets/homepage/image1.svg";
 import image2 from "../assets/homepage/image2.svg";
 import image3 from "../assets/homepage/image3.svg";
