@@ -1,0 +1,94 @@
+.table {
+    thead {
+        background-color: #f1f1f1;
+        tr {
+            th {
+                border-bottom: none;
+                &:nth-child(3) {
+                    width: 150px;
+                }
+            }
+        }
+    }
+    tbody {
+        tr {
+            border-bottom: 1px solid #80808017;
+            td {
+                font-family: IBM Plex Sans, sans-serif;
+                border: none;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 24px;
+                box-sizing: border-box;
+                margin: 0;
+                min-width: 0;
+            }
+        }
+
+        td a.coin-name {
+            display: flex;
+            align-items: center;
+            min-height: 64px;
+            gap: 7px;
+            font-family: "IBM Plex Sans", sans-serif;
+            text-decoration: none;
+            color: inherit;
+            width: fit-content;
+            // margin-bottom: -1px;
+            img.coin-icon {
+                width: 32px;
+                height: 32px;
+                margin-right: 7px;
+                border-radius: 99999px;
+            }
+            span.coin-name__fullname {
+                box-sizing: border-box;
+                margin: 0;
+                min-width: 0;
+                font-size: 12px;
+                line-height: 20px;
+                font-weight: 400;
+                max-width: 110px;
+                letter-spacing: 0.1px;
+            }
+            span.coin-name__symbol {
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+
+        td.coin-price-col {
+            // font-family: Montserrat, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            box-sizing: border-box;
+            margin: 0px;
+            min-width: 0px;
+            &.up {
+                color: #1dd15a;
+            }
+            &.down {
+                color: #ef5959;
+            }
+            &::before {
+                content: attr(about);
+                padding-left: 2px;
+            }
+        }
+
+        td.coin-percentage-col {
+            @extend .coin-price-col;
+            @extend .coin-price-col, .up;
+            &::before {
+                content: "";
+            }
+            &::after {
+                content: attr(about);
+            }
+        }
+    }
+}
