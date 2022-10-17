@@ -27,7 +27,6 @@ export const Chart = (props: { symbol: string }) => {
   useEffect(() => {
     (async () => {
       const response = await getOHLC(symbol);
-      console.log(response);
       setData(
         response.prices.map((item: any) => {
           return { time: item[0] / 1000, value: item[1] };

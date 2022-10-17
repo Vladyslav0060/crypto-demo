@@ -30,7 +30,7 @@ const CoinTitlePanel = (props: { data: ICoinInfo }) => {
         <span className="coin-price__subtitle">Tags</span>
 
         <div className="coin-price__badges">
-          {data.categories.slice(0, 5).map((item: string) => (
+          {data.categories.slice(0, 3).map((item: string) => (
             <Badge
               key={item}
               style={{
